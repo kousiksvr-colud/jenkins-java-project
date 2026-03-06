@@ -1,0 +1,165 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Swiggy Clone</title>
+
+<style>
+body{
+font-family: Arial, sans-serif;
+margin:0;
+background:#f5f5f5;
+}
+
+header{
+background:#fc8019;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+color:white;
+}
+
+.logo{
+font-size:24px;
+font-weight:bold;
+}
+
+.search-box{
+width:300px;
+padding:8px;
+border-radius:5px;
+border:none;
+}
+
+.container{
+padding:30px;
+}
+
+.restaurant-grid{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.card{
+background:white;
+border-radius:10px;
+width:250px;
+box-shadow:0 3px 6px rgba(0,0,0,0.2);
+overflow:hidden;
+transition:0.3s;
+}
+
+.card:hover{
+transform:scale(1.05);
+}
+
+.card img{
+width:100%;
+height:160px;
+object-fit:cover;
+}
+
+.card-content{
+padding:10px;
+}
+
+.card h3{
+margin:5px 0;
+}
+
+.rating{
+color:green;
+font-weight:bold;
+}
+
+footer{
+text-align:center;
+padding:15px;
+background:#333;
+color:white;
+margin-top:30px;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+<div class="logo">Swiggy</div>
+<input type="text" class="search-box" placeholder="Search for restaurants..." onkeyup="searchFood()">
+</header>
+
+<div class="container">
+
+<h2>Popular Restaurants</h2>
+
+<div class="restaurant-grid" id="restaurantList">
+
+<div class="card">
+<img src="https://picsum.photos/300/200?1">
+<div class="card-content">
+<h3>Biryani House</h3>
+<p class="rating">⭐ 4.3</p>
+<p>Delivery Time: 30 mins</p>
+</div>
+</div>
+
+<div class="card">
+<img src="https://picsum.photos/300/200?2">
+<div class="card-content">
+<h3>Pizza Corner</h3>
+<p class="rating">⭐ 4.1</p>
+<p>Delivery Time: 25 mins</p>
+</div>
+</div>
+
+<div class="card">
+<img src="https://picsum.photos/300/200?3">
+<div class="card-content">
+<h3>Burger King</h3>
+<p class="rating">⭐ 4.2</p>
+<p>Delivery Time: 20 mins</p>
+</div>
+</div>
+
+<div class="card">
+<img src="https://picsum.photos/300/200?4">
+<div class="card-content">
+<h3>Andhra Meals</h3>
+<p class="rating">⭐ 4.5</p>
+<p>Delivery Time: 35 mins</p>
+</div>
+</div>
+
+</div>
+</div>
+
+<footer>
+© 2026 Swiggy Clone Demo
+</footer>
+
+<script>
+function searchFood(){
+let input=document.querySelector(".search-box").value.toLowerCase();
+let cards=document.querySelectorAll(".card");
+
+cards.forEach(card=>{
+let text=card.innerText.toLowerCase();
+
+if(text.includes(input)){
+card.style.display="block";
+}else{
+card.style.display="none";
+}
+});
+}
+</script>
+
+</body>
+</html>
+```
+
