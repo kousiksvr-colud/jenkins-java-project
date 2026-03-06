@@ -1,3 +1,4 @@
+```groovy
 pipeline {
     agent any
 
@@ -21,6 +22,12 @@ pipeline {
             }
         }
 
+        stage('Stop Old Container') {
+            steps {
+                sh 'docker rm -f mycontainer1 || true'
+            }
+        }
+
         stage('Run Container') {
             steps {
                 sh 'docker run -d -p 1111:8080 --name mycontainer1 kousik-1'
@@ -29,5 +36,4 @@ pipeline {
 
     }
 }
-
-
+```
