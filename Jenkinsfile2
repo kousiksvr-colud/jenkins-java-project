@@ -23,7 +23,7 @@ pipeline {
 
         stage('Run Container') {
             steps {
-                sh 'docker run -d -p 1111:8080 --name mycontainer kousik-1'
+                sh 'docker run -d -p 1111:8080 --name mycontainer1 kousik-1'
             }
         }
 
