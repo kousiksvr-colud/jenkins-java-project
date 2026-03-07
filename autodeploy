@@ -1,0 +1,70 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = "kousik/java-app"
+        CONTAINER_NAME = "java-app-container"
+        VERSION = "${BUILD_NUMBER}"
+    }
+
+    stages {
+
+        stage('Remove Old Container') {
+            steps {
+                sh '''
+                docker stop $CONTAINER_NAME || true
+                docker rm $CONTAINER_NAME || true
+                '''
+            }
+        }
+
+        stage('Remove Old Image') {
+            steps {
+                sh '''
+                docker rmi $IMAGE_NAME:latest || true
+                '''
+            }
+        }
+
+        stage('Build Application') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh '''
+                docker build -t $IMAGE_NAME:$VERSION .
+                docker tag $IMAGE_NAME:$VERSION $IMAGE_NAME:latest
+                '''
+            }
+        }
+
+        stage('Run Container') {
+            steps {
+                sh '''
+                docker run -d -p 8082:8080 --name $CONTAINER_NAME $IMAGE_NAME:$VERSION
+                '''
+            }
+        }
+
+        stage('Docker Login') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'docker-creds', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    sh 'echo $PASS | docker login -u $USER --password-stdin'
+                }
+            }
+        }
+
+        stage('Push Image') {
+            steps {
+                sh '''
+                docker push $IMAGE_NAME:$VERSION
+                docker push $IMAGE_NAME:latest
+                '''
+            }
+        }
+
+    }
+}
